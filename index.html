@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Love & Dating - Dành Tặng Em</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- AOS Animate On Scroll -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Be Vietnam Pro', 'sans-serif'],
+            beVietnam: ['Be Vietnam Pro', 'sans-serif'],
+            dancing: ['Dancing Script', 'cursive'],
+          },
+          colors: {
+            blush: '#ffd6e7',
+            lavenderDream: '#d9c2ff',
+            softPink: '#ffc1da',
+            dreamyWhite: '#fff9fc',
+            deepRose: '#ff6fa8',
+            violetGlow: '#b388ff',
+          },
+          boxShadow: {
+            glass: '0 8px 32px rgba(31, 38, 135, 0.18)',
+            pink: '0 12px 35px rgba(255, 111, 168, 0.22)',
+            gallery: '0 20px 45px rgba(179, 136, 255, 0.18), 0 12px 30px rgba(255, 111, 168, 0.16)',
+          },
+          animation: {
+            floaty: 'floaty 4s ease-in-out infinite',
+            pulseSoft: 'pulseSoft 2.5s ease-in-out infinite',
+            heartFall: 'heartFall linear forwards',
+            drift: 'drift ease-in-out infinite',
+            sparkle: 'sparkle 5s ease-in-out infinite',
+          },
+          keyframes: {
+            floaty: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            pulseSoft: {
+              '0%, 100%': { transform: 'scale(1)', opacity: '0.95' },
+              '50%': { transform: 'scale(1.04)', opacity: '1' },
+            },
+            heartFall: {
+              '0%': { transform: 'translateY(-10vh) scale(0.8)', opacity: '0' },
+              '10%': { opacity: '0.9' },
+              '100%': { transform: 'translateY(110vh) scale(1.15)', opacity: '0' },
+            },
+            drift: {
+              '0%, 100%': { transform: 'translate3d(0, 0, 0) rotate(0deg)' },
+              '25%': { transform: 'translate3d(20px, -30px, 0) rotate(4deg)' },
+              '50%': { transform: 'translate3d(-12px, -55px, 0) rotate(-4deg)' },
+              '75%': { transform: 'translate3d(16px, -25px, 0) rotate(3deg)' },
+            },
+            sparkle: {
+              '0%, 100%': { opacity: '0.15', transform: 'scale(0.95)' },
+              '50%': { opacity: '0.32', transform: 'scale(1.08)' },
+            },
+          },
+          backgroundImage: {
+            heroGlow: 'radial-gradient(circle at top left, rgba(255, 210, 228, 0.9), transparent 35%), radial-gradient(circle at top right, rgba(179, 136, 255, 0.35), transparent 30%), linear-gradient(135deg, #fff7fb 0%, #ffeaf4 38%, #f7efff 100%)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #fff7fb 0%, #ffeef6 45%, #f4ebff 100%);
+      color: #5d4966;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.28);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.38);
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.12);
+    }
+
+    .glass-strong {
+      background: rgba(255, 255, 255, 0.36);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      box-shadow: 0 16px 40px rgba(255, 111, 168, 0.12);
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #ff7eb3, #b388ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .typing-cursor::after {
+      content: '|';
+      display: inline-block;
+      margin-left: 4px;
+      animation: blink 0.8s infinite;
+      color: #ff6fa8;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .love-letter {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 1.2s ease, opacity 1s ease, transform 1s ease;
+      opacity: 0;
+      transform: translateY(18px);
+    }
+
+    .love-letter.show {
+      max-height: 1000px;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .photo-card {
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.45s ease, box-shadow 0.45s ease, border-color 0.45s ease;
+    }
+
+    .photo-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(124, 58, 237, 0.08), rgba(255,255,255,0));
+      opacity: 0;
+      transition: opacity 0.45s ease;
+      pointer-events: none;
+    }
+
+    .photo-card img {
+      transition: transform 0.6s ease, filter 0.45s ease;
+      will-change: transform;
+    }
+
+    .photo-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 45px rgba(179, 136, 255, 0.18), 0 12px 30px rgba(255, 111, 168, 0.18);
+      border-color: rgba(255,255,255,0.55);
+    }
+
+    .photo-card:hover::after {
+      opacity: 1;
+    }
+
+    .photo-card:hover img {
+      transform: scale(1.07);
+      filter: brightness(1.06) saturate(1.08);
+    }
+
+    .heart {
+      position: fixed;
+      top: -10vh;
+      z-index: 1;
+      pointer-events: none;
+      user-select: none;
+      animation-name: heartFall;
+      animation-timing-function: linear;
+      animation-fill-mode: forwards;
+      text-shadow: 0 0 12px rgba(255, 111, 168, 0.55);
+    }
+
+    .floating-heart {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      color: rgba(255, 138, 188, 0.14);
+      filter: blur(0.2px);
+      animation-name: drift, sparkle;
+      animation-timing-function: ease-in-out, ease-in-out;
+      animation-iteration-count: infinite, infinite;
+    }
+
+    .section-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      line-height: 1.15;
+    }
+
+    .music-visualizer span {
+      width: 4px;
+      border-radius: 999px;
+      background: linear-gradient(to top, #ff8ebd, #b388ff);
+      display: inline-block;
+      animation: equalize 1s infinite ease-in-out;
+    }
+
+    .music-visualizer span:nth-child(2) { animation-delay: 0.15s; }
+    .music-visualizer span:nth-child(3) { animation-delay: 0.3s; }
+    .music-visualizer span:nth-child(4) { animation-delay: 0.45s; }
+
+    @keyframes equalize {
+      0%, 100% { height: 10px; }
+      50% { height: 26px; }
+    }
+  </style>
+</head>
+<body class="relative min-h-screen">
+  <!-- Floating Hearts Background -->
+  <div id="floating-hearts-bg" aria-hidden="true"></div>
+
+  <!-- Heart Rain -->
+  <div id="heart-rain"></div>
+
+  <!-- Decorative Blurs -->
+  <div class="fixed -top-24 -left-24 w-72 h-72 bg-pink-200/50 rounded-full blur-3xl z-0"></div>
+  <div class="fixed top-1/3 -right-20 w-80 h-80 bg-violet-200/40 rounded-full blur-3xl z-0"></div>
+  <div class="fixed bottom-0 left-1/4 w-72 h-72 bg-rose-100/40 rounded-full blur-3xl z-0"></div>
+
+  <audio id="bg-music" loop>
+  <source src="music/yeu.mp3" type="audio/mpeg">
+</audio>
+
+  <main class="relative z-10">
+    <!-- HERO -->
+    <section class="min-h-screen bg-heroGlow px-4 py-8 md:px-8 flex items-center">
+      <div class="max-w-7xl mx-auto w-full">
+        <div class="grid lg:grid-cols-2 gap-10 items-center">
+          <div class="space-y-6" data-aos="fade-up" data-aos-duration="1100">
+            <div class="inline-flex items-center gap-2 glass px-4 py-2 rounded-full text-sm font-medium text-rose-500">
+              <span class="animate-pulse">❤</span>
+              Tặng em người anh yêu thương nhất
+            </div>
+
+            <h1 class="font-dancing text-5xl md:text-7xl font-bold text-rose-500 leading-tight drop-shadow-sm">
+              Gửi đến <span class="gradient-text">em</span><br />
+              người làm những ngày của anh dịu dàng hơn
+            </h1>
+
+            <div class="glass-strong rounded-3xl p-5 md:p-6 max-w-2xl" data-aos="fade-up" data-aos-delay="120">
+              <p class="text-base md:text-xl text-slate-700 leading-relaxed">
+                <span id="typing-text" class="typing-cursor font-medium"></span>
+              </p>
+            </div>
+
+            <div class="flex flex-wrap gap-4 pt-2" data-aos="fade-up" data-aos-delay="220">
+              <a href="#countdown" class="px-6 py-3 rounded-full bg-gradient-to-r from-pink-400 to-violet-400 text-white font-semibold shadow-pink hover:scale-105 transition duration-300">
+                Thời gian chúng mình bên nhau
+              </a>
+              <button id="music-toggle" class="glass px-6 py-3 rounded-full font-semibold text-rose-500 hover:scale-105 transition duration-300 flex items-center gap-3">
+                <span id="music-icon">♫</span>
+                <span id="music-text">Bật nhạc yêu thương</span>
+                <span class="music-visualizer hidden items-end gap-1 h-7" id="music-bars">
+                  <span></span><span></span><span></span><span></span>
+                </span>
+              </button>
+            </div>
+          </div>
+
+          <div class="relative" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="150">
+            <div class="glass-strong rounded-[2rem] p-5 md:p-7 shadow-pink animate-floaty">
+              <div class="rounded-[1.5rem] overflow-hidden relative">
+              
+                <img 
+                  src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1200&q=80" 
+                  alt="Ảnh kỷ niệm tình yêu" 
+                  class="w-full h-[380px] md:h-[560px] object-cover"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-rose-900/30 via-transparent to-white/10"></div>
+                <div class="absolute bottom-5 left-5 right-5 glass rounded-2xl p-4 md:p-5">
+                  <p class="font-dancing text-3xl md:text-4xl text-white drop-shadow">
+                    Chúng ta là điều dịu dàng đẹp nhất mà cuộc sống đã trao cho nhau.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="absolute -top-4 -right-4 glass rounded-2xl px-4 py-3 text-rose-500 font-semibold animate-pulseSoft">
+              ✨ Forever & Always
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COUNTDOWN -->
+    <section id="countdown" class="px-4 md:px-8 py-20">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12" data-aos="fade-up">
+          <h2 class="section-title text-rose-500">Thời gian chúng ta đã gặp nhau</h2>
+          <p class="mt-3 text-slate-600 text-base md:text-lg max-w-2xl mx-auto">
+            Từng ngày trôi qua đều lưu lại những kỷ niệm đáng nhớ của hai đứa mình.
+          </p>
+        </div>
+
+        <div class="glass-strong rounded-[2rem] p-5 md:p-8 shadow-pink" data-aos="fade-up" data-aos-delay="120">
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            <div class="glass rounded-3xl p-6 text-center" data-aos="fade-up" data-aos-delay="60">
+              <div id="days" class="text-4xl md:text-6xl font-extrabold gradient-text">00</div>
+              <p class="mt-3 text-sm md:text-base tracking-wide uppercase text-slate-500 font-semibold">Ngày</p>
+            </div>
+            <div class="glass rounded-3xl p-6 text-center" data-aos="fade-up" data-aos-delay="120">
+              <div id="hours" class="text-4xl md:text-6xl font-extrabold gradient-text">00</div>
+              <p class="mt-3 text-sm md:text-base tracking-wide uppercase text-slate-500 font-semibold">Giờ</p>
+            </div>
+            <div class="glass rounded-3xl p-6 text-center" data-aos="fade-up" data-aos-delay="180">
+              <div id="minutes" class="text-4xl md:text-6xl font-extrabold gradient-text">00</div>
+              <p class="mt-3 text-sm md:text-base tracking-wide uppercase text-slate-500 font-semibold">Phút</p>
+            </div>
+            <div class="glass rounded-3xl p-6 text-center" data-aos="fade-up" data-aos-delay="240">
+              <div id="seconds" class="text-4xl md:text-6xl font-extrabold gradient-text">00</div>
+              <p class="mt-3 text-sm md:text-base tracking-wide uppercase text-slate-500 font-semibold">Giây</p>
+            </div>
+          </div>
+
+          <div class="mt-8 text-center text-slate-600 leading-relaxed" data-aos="fade-up" data-aos-delay="260">
+            <p class="text-base md:text-lg">
+              Từ ngày <span class="font-bold text-rose-500" id="love-date-text">01/01/2024 00:00:00</span>,
+              trái tim anh đã học được cách yêu thêm một người bằng tất cả sự dịu dàng.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="px-4 md:px-8 py-20">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12" data-aos="fade-up">
+          <h2 class="section-title text-rose-500">Nhiều chút đáng yêu của em</h2>
+          <p class="mt-3 text-slate-600 max-w-2xl mx-auto">
+            Mỗi tấm ảnh là một khoảnh khắc anh muốn cất giữ, vì người trong ảnh luôn là điều tuyệt vời nhất đối với anh.
+          </p>
+        </div>
+
+        <div class="columns-1 sm:columns-2 lg:columns-3 gap-5 [column-fill:_balance] space-y-5">
+
+  <!-- Ảnh 1 -->
+  <div class="photo-card glass-strong rounded-[1.75rem] break-inside-avoid"
+       data-aos="zoom-in-up"
+       data-aos-delay="0">
+    <div class="overflow-hidden rounded-[1.75rem]">
+      <img
+        src="images/1.png"
+        alt="Ảnh 1"
+        class="w-full h-auto object-cover"
+      >
+    </div>
+    <div class="p-4 relative z-10">
+      <p class="font-dancing text-2xl text-rose-500">
+        Sự giản dị mộc mạc làm anh rung động
+      </p>
+    </div>
+  </div>
+
+  <!-- Ảnh 2 -->
+  <div class="photo-card glass-strong rounded-[1.75rem] break-inside-avoid"
+       data-aos="zoom-in-up"
+       data-aos-delay="80">
+    <div class="overflow-hidden rounded-[1.75rem]">
+      <img
+        src="images/2.jpg"
+        alt="Ảnh 2"
+        class="w-full h-auto object-cover"
+      >
+    </div>
+    <div class="p-4 relative z-10">
+      <p class="font-dancing text-2xl text-violet-500">
+        Người yêu anh hay  đi chùa lớm
+      </p>
+    </div>
+  </div>
+
+  <!-- Ảnh 3 -->
+  <div class="photo-card glass-strong rounded-[1.75rem] break-inside-avoid"
+       data-aos="zoom-in-up"
+       data-aos-delay="140">
+    <div class="overflow-hidden rounded-[1.75rem]">
+      <img
+        src="images/3.png"
+        alt="Ảnh 3"
+        class="w-full h-auto object-cover"
+      >
+    </div>
+    <div class="p-4 relative z-10">
+      <p class="font-dancing text-2xl text-rose-500">
+        Một ngày rất đỗi bình thường
+      </p>
+    </div>
+  </div>
+
+  <!-- Ảnh 4 -->
+  <div class="photo-card glass-strong rounded-[1.75rem] break-inside-avoid"
+       data-aos="zoom-in-up"
+       data-aos-delay="200">
+    <div class="overflow-hidden rounded-[1.75rem]">
+      <img
+        src="images/4.jpg"
+        alt="Ảnh 4"
+        class="w-full h-auto object-cover"
+      >
+    </div>
+    <div class="p-4 relative z-10">
+      <p class="font-dancing text-2xl text-violet-500">
+        Nhiều lúc dễ thương lắm luôn
+      </p>
+    </div>
+  </div>
+
+  <!-- Ảnh 5 -->
+  <div class="photo-card glass-strong rounded-[1.75rem] break-inside-avoid"
+       data-aos="zoom-in-up"
+       data-aos-delay="260">
+    <div class="overflow-hidden rounded-[1.75rem]">
+      <img
+        src="images/5.png"
+        alt="Ảnh 5"
+        class="w-full h-auto object-cover"
+      >
+    </div>
+    <div class="p-4 relative z-10">
+      <p class="font-dancing text-2xl text-rose-500">
+        Em cứ việc vô tri
+      </p>
+    </div>
+  </div>
+
+  <!-- Ảnh 6 -->
+  <div class="photo-card glass-strong rounded-[1.75rem] break-inside-avoid"
+       data-aos="zoom-in-up"
+       data-aos-delay="320">
+    <div class="overflow-hidden rounded-[1.75rem]">
+      <img
+        src="images/6.png"
+        alt="Ảnh 6"
+        class="w-full h-auto object-cover"
+      >
+    </div>
+    <div class="p-4 relative z-10">
+      <p class="font-dancing text-2xl text-violet-500">
+        Thế giới để anh lo
+      </p>
+    </div>
+  </div>
+
+</div>
+
+    <!-- SURPRISE LETTER -->
+    <section class="px-4 md:px-8 py-20">
+      <div class="max-w-5xl mx-auto text-center">
+        <div class="glass-strong rounded-[2rem] p-6 md:p-10 shadow-pink" data-aos="fade-up" data-aos-duration="1000">
+          <h2 class="section-title text-violet-500">Một điều bất ngờ dành riêng cho em</h2>
+          <p class="mt-3 text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            Có những điều anh không chỉ muốn nói bằng lời, mà còn muốn viết ra thật chậm, thật dịu dàng, để em cảm nhận được tất cả yêu thương trong đó.
+          </p>
+
+          <button id="surprise-btn" class="mt-8 inline-flex items-center gap-3 px-7 py-4 rounded-full bg-gradient-to-r from-pink-400 via-rose-400 to-violet-400 text-white font-bold shadow-pink hover:scale-105 transition duration-300">
+            💌 Mở bức thư tình bí mật
+          </button>
+
+          <div id="love-letter" class="love-letter mt-8 text-left glass rounded-[1.75rem] p-6 md:p-8 max-w-3xl mx-auto">
+            <p class="font-dancing text-3xl md:text-4xl text-rose-500 mb-4">Xin chào cô gái của lòng anh...</p>
+            <div class="space-y-4 text-slate-700 leading-8 text-base md:text-lg">
+              <p>
+                 Cảm ơn em vì đã bước vào cuộc sống của anh. Từ khi có em, những ngày bình thường cũng trở nên đặc biệt, anh cảm giác mỗi ngày đều tràn ngập niềm vui , yêu thương .
+              </p>
+              <p>
+                 Anh yêu cách em quan tâm, yêu cả sự vô tri , ngây thơ của e ,cách em khiến cả thế giới của anh mềm lại chỉ bằng một vài dòng tin nhắn . Em không chỉ là người anh yêu, mà còn là người anh muốn cùng đi qua những tháng năm sau này.
+              </p>
+              <p>
+                Dù tương lai còn bao nhiêu điều phía trước, anh vẫn mong sẽ được nắm tay em thật lâu, cùng nhau trưởng thành, cùng nhau đi qua vui buồn, và cùng nhau viết tiếp chuyện tình cảm của chúng mình bằng tất cả chân thành.
+              </p>
+              <p class="font-semibold text-rose-500">
+                Anh thương em rất nhiều. Hôm nay, ngày mai, và cả những ngày sau nữa.
+              </p>
+              <p class="font-dancing text-3xl text-violet-500 pt-2">
+                Mãi yêu em. ❤
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="px-4 md:px-8 pb-10">
+      <div class="max-w-6xl mx-auto">
+        <div class="glass rounded-[2rem] p-5 md:p-6 text-center" data-aos="fade-up">
+          <p class="font-dancing text-3xl md:text-4xl gradient-text">Món quà nhỏ, nhưng là cả tấm lòng.</p>
+          <p class="mt-3 text-slate-600">
+            Dành tặng cho <span class="font-bold text-rose-500">Đình Đình</span> — người anh thương .
+          </p>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    /* =========================================================
+       CẤU HÌNH CHỈNH SỬA NHANH
+       ========================================================= */
+
+    const CONFIG = {
+      loverName: 'Đình Đình',
+      yourName: 'Tên của bạn',
+      loveStartDate: '2025-05-19T20:00:00',
+      typingMessages: [
+        'Chào em yêu, cảm ơn em đã đến và làm thế giới của anh trở nên dịu dàng hơn mỗi ngày.',
+        'Từ khoảnh khắc gặp em, anh đã biết rằng trái tim mình sẽ không còn bình yên như trước nữa.',
+        'Trang web này là món quà nhỏ, thay cho tất cả những yêu thương anh muốn dành riêng cho em.'
+      ]
+    };
+
+    /* =========================================================
+       AOS INIT
+       ========================================================= */
+    AOS.init({
+      duration: 1000,
+      once: true,
+      offset: 80,
+      easing: 'ease-out-cubic'
+    });
+
+    /* =========================================================
+       TYPING EFFECT
+       ========================================================= */
+    const typingText = document.getElementById('typing-text');
+    let messageIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function typeLoop() {
+      const currentMessage = CONFIG.typingMessages[messageIndex];
+
+      if (!isDeleting) {
+        typingText.textContent = currentMessage.slice(0, charIndex + 1);
+        charIndex++;
+
+        if (charIndex === currentMessage.length) {
+          isDeleting = true;
+          setTimeout(typeLoop, 1800);
+          return;
+        }
+      } else {
+        typingText.textContent = currentMessage.slice(0, charIndex - 1);
+        charIndex--;
+
+        if (charIndex === 0) {
+          isDeleting = false;
+          messageIndex = (messageIndex + 1) % CONFIG.typingMessages.length;
+        }
+      }
+
+      setTimeout(typeLoop, isDeleting ? 28 : 55);
+    }
+
+    typeLoop();
+
+    /* =========================================================
+       HEART RAIN
+       ========================================================= */
+    const heartContainer = document.getElementById('heart-rain');
+    const heartIcons = ['❤', '💖', '💗', '💕', '💘'];
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.textContent = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.fontSize = (14 + Math.random() * 18) + 'px';
+      heart.style.animationDuration = (5 + Math.random() * 7) + 's';
+      heart.style.opacity = 0.75 + Math.random() * 0.25;
+      heart.style.transform = `translateY(-10vh) rotate(${Math.random() * 50 - 25}deg)`;
+      heartContainer.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 13000);
+    }
+
+    setInterval(createHeart, 320);
+
+    /* =========================================================
+       FLOATING HEARTS BACKGROUND
+       ========================================================= */
+    const floatingBg = document.getElementById('floating-hearts-bg');
+    const floatIcons = ['❤', '♡', '♥'];
+
+    function createFloatingHearts() {
+      const total = window.innerWidth < 768 ? 12 : 20;
+      floatingBg.innerHTML = '';
+
+      for (let i = 0; i < total; i++) {
+        const el = document.createElement('div');
+        el.className = 'floating-heart';
+        el.textContent = floatIcons[Math.floor(Math.random() * floatIcons.length)];
+        el.style.left = Math.random() * 100 + 'vw';
+        el.style.top = Math.random() * 100 + 'vh';
+        el.style.fontSize = (18 + Math.random() * 42) + 'px';
+        el.style.animationDuration = `${8 + Math.random() * 8}s, ${4 + Math.random() * 4}s`;
+        el.style.animationDelay = `${Math.random() * 4}s, ${Math.random() * 3}s`;
+        el.style.opacity = 0.08 + Math.random() * 0.14;
+        floatingBg.appendChild(el);
+      }
+    }
+
+    createFloatingHearts();
+    window.addEventListener('resize', createFloatingHearts);
+
+    /* =========================================================
+       COUNT UP LOVE TIMER
+       ========================================================= */
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+    const loveDateText = document.getElementById('love-date-text');
+
+    const loveStart = new Date(CONFIG.loveStartDate);
+    loveDateText.textContent = loveStart.toLocaleString('vi-VN');
+
+    function updateLoveTimer() {
+      const now = new Date();
+      const diff = now - loveStart;
+
+      if (diff < 0) {
+        daysEl.textContent = '00';
+        hoursEl.textContent = '00';
+        minutesEl.textContent = '00';
+        secondsEl.textContent = '00';
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      daysEl.textContent = String(days).padStart(2, '0');
+      hoursEl.textContent = String(hours).padStart(2, '0');
+      minutesEl.textContent = String(minutes).padStart(2, '0');
+      secondsEl.textContent = String(seconds).padStart(2, '0');
+    }
+
+    updateLoveTimer();
+    setInterval(updateLoveTimer, 1000);
+
+    /* =========================================================
+       MUSIC CONTROL
+       ========================================================= */
+    const bgMusic = document.getElementById('bg-music');
+    const musicToggle = document.getElementById('music-toggle');
+    const musicText = document.getElementById('music-text');
+    const musicBars = document.getElementById('music-bars');
+
+    let isMusicPlaying = false;
+
+    function updateMusicUI() {
+      if (isMusicPlaying) {
+        musicText.textContent = 'Tắt nhạc';
+        musicBars.classList.remove('hidden');
+        musicBars.classList.add('inline-flex');
+      } else {
+        musicText.textContent = 'Bật nhạc yêu thương';
+        musicBars.classList.add('hidden');
+        musicBars.classList.remove('inline-flex');
+      }
+    }
+
+    musicToggle.addEventListener('click', async () => {
+      try {
+        if (!isMusicPlaying) {
+          await bgMusic.play();
+          bgMusic.volume = 0.5;
+          isMusicPlaying = true;
+        } else {
+          bgMusic.pause();
+          isMusicPlaying = false;
+        }
+        updateMusicUI();
+      } catch (error) {
+        alert('Trình duyệt đang chặn tự phát nhạc. Bạn hãy bấm lại nút thêm một lần để phát nhé!');
+      }
+    });
+
+    updateMusicUI();
+
+    /* =========================================================
+       SURPRISE LOVE LETTER
+       ========================================================= */
+    const surpriseBtn = document.getElementById('surprise-btn');
+    const loveLetter = document.getElementById('love-letter');
+    let letterOpened = false;
+
+    surpriseBtn.addEventListener('click', () => {
+      letterOpened = !letterOpened;
+      loveLetter.classList.toggle('show', letterOpened);
+      surpriseBtn.innerHTML = letterOpened
+        ? '💖 Cất bức thư lại'
+        : '💌 Mở bức thư tình bí mật';
+
+      if (letterOpened) {
+        setTimeout(() => {
+          loveLetter.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 300);
+      }
+    });
+
+    /* =========================================================
+       FOOTER TEXT PERSONALIZATION
+       ========================================================= */
+    document.querySelector('footer span').textContent = CONFIG.loverName;
+  </script>
+</body>
+</html>
